@@ -77,7 +77,7 @@ public class ChessUtils {
     }
 
     public static boolean clean(char board[][], char move[], char moveTo[]) {
-        if (move[1] == moveTo[1]) { //misma fila
+        if (move[1] == moveTo[1]) { //same row
             if (move[0] < moveTo[0]) {
                 for (int i = move[0] + 1; i < moveTo[0]; i++) {
                     if (board[move[1]][i] != '\0') {
@@ -95,7 +95,7 @@ public class ChessUtils {
                 }
                 return true;
             }
-        } else if (move[0] == moveTo[0]) { //misma columna
+        } else if (move[0] == moveTo[0]) { //same column
             if (move[1] < moveTo[1]) {
                 for (int i = move[1] + 1; i < moveTo[1]; i++) {
                     if (board[i][move[0]] != '\0') {
@@ -114,7 +114,7 @@ public class ChessUtils {
                 return true;
             }
         } else {//Diagonal
-            if (move[1] < moveTo[1] && move[0] < moveTo[0]) {//diagonal abajo derecha
+            if (move[1] < moveTo[1] && move[0] < moveTo[0]) {//bottom right diagonal
                 int diff = moveTo[0] - move[0];
                 for (int i = 1; i < diff; i++) {
                     if (board[move[1] + i][move[0] + i] != '\0') {
@@ -123,7 +123,7 @@ public class ChessUtils {
                     }
                 }
                 return true;
-            } else if (move[1] < moveTo[1] && move[0] > moveTo[0]) { //diagonal arriba derecha
+            } else if (move[1] < moveTo[1] && move[0] > moveTo[0]) { //upper right diagonal
                 int diff = move[0] - moveTo[0];
                 for (int i = 1; i < diff; i++) {
                     if (board[move[1] + i][move[0] - i] != '\0') {
@@ -132,7 +132,7 @@ public class ChessUtils {
                     }
                 }
                 return true;
-            } else if (move[1] > moveTo[1] && move[0] < moveTo[0]) { //diagonal abajo izquierda
+            } else if (move[1] > moveTo[1] && move[0] < moveTo[0]) { //bottom left diagonal
                 int diff = moveTo[0] - move[0];
                 for (int i = 1; i < diff; i++) {
                     if (board[move[1] - i][move[0] + i] != '\0') {

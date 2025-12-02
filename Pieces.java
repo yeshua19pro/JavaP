@@ -48,8 +48,39 @@ public class Pieces {
     public static boolean validBishop(char[][] board, char[] move, char[] moveTo) {
         boolean x = false;
         if (move[0] - moveTo[0] == move[1] - moveTo[1]) x = true;
+        else if (move[1] > moveTo[1] && move[0] < moveTo[0]) {
+            int col = move[0];
+            int row = move[1];
+            while (col < moveTo[0] && row > moveTo[1]) {
+                col++;
+                row--;
+                if (col == moveTo[0] && row == moveTo[1]) {
+                    x = true;
+                }
+            }
+        }
+        else if (move[1] < moveTo[1] && move[0] > moveTo[0]) {
+            int col = move[0];
+            int row = move[1];
+            while (col > moveTo[0] && row < moveTo[1]) {
+                col--;
+                row++;
+
+                if (col == moveTo[0] && row == moveTo[1]) {
+                    x = true;
+                }
+            }
+        }
         if (!x) return false;
         x = ChessUtils.clean(board, move, moveTo);
         return x;
+    }
+
+    public static boolean validQueen(char[][] board, char[] move, char[] moveTo) {
+        if (validRook(board, move, moveTo)) return true;
+
+        if (validBishop(board, move, moveTo)) return true;
+
+        return false;
     }
 }

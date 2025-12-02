@@ -45,6 +45,12 @@ public class ChessUtils {
                 return false;
             }
             return true;
+        } else if (piece == '♛' || piece == '♕') {
+            if (!Pieces.validQueen(board, move, moveTo)) {
+                System.out.println("invalid move for the queen");
+                return false;
+            }
+            return true;
         } else {
             return true;
         }

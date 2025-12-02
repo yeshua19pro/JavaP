@@ -2,29 +2,6 @@ import java.util.Scanner;
 
 public class ChessUtils {
     static boolean whiteTurn = true;
-    public static boolean isWPiece(char p) {
-        char [] wPieces = {'♟', '♞', '♝', '♜', '♛', '♚'};
-        for (int i = 0; i < wPieces.length; i++) {
-            if (p == wPieces[i]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isBPiece(char p) {
-        char [] bPieces = {'♙', '♘', '♗', '♖', '♕', '♔'};
-        for (int i = 0; i < bPieces.length; i++) {
-            if (p == bPieces[i]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isPiece(char p) {
-        return isWPiece(p) || isBPiece(p);
-    }
 
     public static boolean validMove(char [][] board, char[] move, char[] moveTo){
         char piece = board[move[1]][move[0]];
@@ -35,19 +12,19 @@ public class ChessUtils {
         } else if (moveTo[0] < 0 || moveTo[0] > 7 || moveTo[1] < 0 || moveTo[1] > 7) {
             System.out.println("Destination square outside the board.");
             return false;
-        } else if (!isPiece(piece)) {
+        } else if (!Pieces.isPiece(piece)) {
             System.out.println("There are no pieces on the home board.");
             return false;
-        } else if (whiteTurn && !isWPiece(piece)) {
+        } else if (whiteTurn && !Pieces.isWPiece(piece)) {
             System.out.println("You must move a white piece.");
             return false;
-        } else if(!whiteTurn && !isBPiece(piece)) {
+        } else if(!whiteTurn && !Pieces.isBPiece(piece)) {
             System.out.println("You must move a black piece.");
             return false;
-        } else if (isWPiece(piece) && isWPiece(target)) {
+        } else if (Pieces.isWPiece(piece) && Pieces.isWPiece(target)) {
             System.out.println("You can't capture your own piece.");
             return false;
-        } else if (isBPiece(piece) && isBPiece(target)) {
+        } else if (Pieces.isBPiece(piece) && Pieces.isBPiece(target)) {
             System.out.println("You can't capture your own piece.");
             return false;
         }else {
@@ -97,5 +74,83 @@ public class ChessUtils {
         board[moveTo[1]][moveTo[0]] = board[move[1]][move[0]];
         board[move[1]][move[0]] = '\0';
         return board;
+    }
+
+    public static boolean clean(char board[][], char move[], char moveTo[]) {
+        if (move[1] == moveTo[1]) { //misma fila
+            if (move[0] < moveTo[0]) {
+                for (int i = move[0] + 1; i < moveTo[0]; i++) {
+                    if (board[move[1]][i] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                for (int i = moveTo[0] + 1; i < move[0]; i++) {
+                    if (board[move[1]][i] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } else if (move[0] == moveTo[0]) { //misma columna
+            if (move[1] < moveTo[1]) {
+                for (int i = move[1] + 1; i < moveTo[1]; i++) {
+                    if (board[i][move[0]] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            } else {
+                for (int i = moveTo[1] + 1; i < move[1]; i++) {
+                    if (board[i][move[0]] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            }
+        } else {//Diagonal
+            if (move[1] < moveTo[1] && move[0] < moveTo[0]) {//diagonal abajo derecha
+                int diff = moveTo[0] - move[0];
+                for (int i = 1; i < diff; i++) {
+                    if (board[move[1] + i][move[0] + i] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            } else if (move[1] < moveTo[1] && move[0] > moveTo[0]) { //diagonal arriba derecha
+                int diff = move[0] - moveTo[0];
+                for (int i = 1; i < diff; i++) {
+                    if (board[move[1] + i][move[0] - i] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            } else if (move[1] > moveTo[1] && move[0] < moveTo[0]) { //diagonal abajo izquierda
+                int diff = moveTo[0] - move[0];
+                for (int i = 1; i < diff; i++) {
+                    if (board[move[1] - i][move[0] + i] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            } else { //diagonal arriba izquierda
+                int diff = move[0] - moveTo[0];
+                for (int i = 1; i < diff; i++) {
+                    if (board[move[1] - i][move[0] - i] != '\0') {
+                        System.out.println("There is a piece blocking the way.");
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
     }
 }

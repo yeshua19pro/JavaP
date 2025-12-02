@@ -27,7 +27,25 @@ public class ChessUtils {
         } else if (Pieces.isBPiece(piece) && Pieces.isBPiece(target)) {
             System.out.println("You can't capture your own piece.");
             return false;
-        }else {
+        } else if (piece == '♞' || piece == '♘') {
+            if (!validKnight(move, moveTo)) {
+                System.out.println("invalid move for the knight");
+                return false;
+            }
+            return true;
+        } else if (piece == '♜' || piece == '♖'){
+            if (!Pieces.validRook(board, move, moveTo)) {
+                System.out.println("invalid move for the rook");
+                return false;
+            }
+            return true;
+        } else if (piece == '♝' || piece == '♗') {
+            if (!Pieces.validBishop(board, move, moveTo)) {
+                System.out.println("invalid move for the bishop");
+                return false;
+            }
+            return true;
+        } else {
             return true;
         }
     }
@@ -57,7 +75,7 @@ public class ChessUtils {
             }
 
             move = mo.toCharArray();
-            convert(move);
+            ChessBoard.convert(move);
             System.out.println("Ingresa la casilla a la que la vas a mover");
             String to = sc.nextLine().trim();
 
@@ -67,7 +85,7 @@ public class ChessUtils {
             }
 
             moveTo = to.toCharArray();
-            convert(moveTo);
+            ChessBoard.convert(moveTo);
 
             validM = validMove(board, move, moveTo);
         }
@@ -141,7 +159,7 @@ public class ChessUtils {
                     }
                 }
                 return true;
-            } else { //diagonal arriba izquierda
+            } else { //top left diagonal
                 int diff = move[0] - moveTo[0];
                 for (int i = 1; i < diff; i++) {
                     if (board[move[1] - i][move[0] - i] != '\0') {

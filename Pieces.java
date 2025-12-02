@@ -44,4 +44,12 @@ public class Pieces {
         x = ChessUtils.clean(board, move, moveTo);
         return x;
     }
+
+    public static boolean validBishop(char[][] board, char[] move, char[] moveTo) {
+        boolean x = false;
+        if (move[0] - moveTo[0] == move[1] - moveTo[1]) x = true;
+        if (!x) return false;
+        x = ChessUtils.clean(board, move, moveTo);
+        return x;
+    }
 }

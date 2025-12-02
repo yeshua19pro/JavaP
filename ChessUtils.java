@@ -51,6 +51,11 @@ public class ChessUtils {
                 return false;
             }
             return true;
+        } else if (piece == '♚' || piece == '♔') {
+            if (!Pieces.validKing(board, move, moveTo)) {
+                System.out.println("invalid move for the king");
+                return false;
+            }
         } else {
             return true;
         }

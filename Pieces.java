@@ -83,4 +83,51 @@ public class Pieces {
 
         return false;
     }
+    public static boolean validKing (char[][] board, char[] move, char[] moveTo) {
+        boolean x = false;
+        int col = move[0];
+        int row = move[1];
+        if (moveTo[0] == col - 1 && moveTo[1] == row - 1) x = true;
+        else if (moveTo[0] == col - 1 && moveTo[1] == row) x = true;
+        else if (moveTo[0] == col - 1 && moveTo[1] == row + 1) x = true;
+        else if (moveTo[0] == col && moveTo[1] == row - 1) x = true;
+        else if (moveTo[0] == col && moveTo[1] == row + 1) x = true;
+        else if (moveTo[0] == col + 1 && moveTo[1] == row - 1) x = true;
+        else if (moveTo[0] == col + 1 && moveTo[1] == row) x = true;
+        else if (moveTo[0] == col + 1 && moveTo[1] == row + 1) x = true;
+        if (!x) return false;
+        char enemyKing;
+        char thisKing = board[move[1]][move[0]];
+        if (thisKing == '♚'){
+            enemyKing = '♔';
+        } else if (thisKing == '♔') {
+            enemyKing = '♚';
+        }else {
+            return false;
+        }
+        int enemyCol = -1;
+        int enemyRow = -1;
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                if (board[r][c] == enemyKing) {
+                    enemyCol = c;
+                    enemyRow = r;
+                    break;
+                }
+            }
+        }
+        int dx = moveTo[0] - enemyCol;
+        int dy = moveTo[1] - enemyRow;
+        if ( dx < 1 ){
+            dx = -dx;
+        }
+        if ( dy < 1 ){
+            dy = -dy;
+        }
+        if (dx <= 1 && dy <= 1) {
+            System.out.println("The king cannot move next to the enemy king.");
+            return false;
+        }
+        return true;
+    }
 }

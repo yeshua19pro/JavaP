@@ -27,7 +27,10 @@ public class ChessUtils {
         } else if (Pieces.isBPiece(piece) && Pieces.isBPiece(target)) {
             System.out.println("You can't capture your own piece.");
             return false;
-        } else if (piece == '♞' || piece == '♘') {
+        } else if (move [0] == moveTo[0] && move[1] == moveTo[1]) {
+            System.out.println("You must move to a different square.");
+            return false;
+        }else if (piece == '♞' || piece == '♘') {
             if (!validKnight(move, moveTo)) {
                 System.out.println("invalid move for the knight");
                 return false;

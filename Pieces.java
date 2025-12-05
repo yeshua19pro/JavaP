@@ -1,33 +1,10 @@
 public class Pieces {
-    public static boolean isWPiece(char p) {
-        char [] wPieces = {'♟', '♞', '♝', '♜', '♛', '♚'};
-        for (int i = 0; i < wPieces.length; i++) {
-            if (p == wPieces[i]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isBPiece(char p) {
-        char [] bPieces = {'♙', '♘', '♗', '♖', '♕', '♔'};
-        for (int i = 0; i < bPieces.length; i++) {
-            if (p == bPieces[i]) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public static boolean isPiece(char p) {
-        return isWPiece(p) || isBPiece(p);
-    }
-
     public static boolean validKnight(char[] move, char[] moveTo) {
         int x = Math.abs(move[0] - moveTo[0]);
         int y = Math.abs(move[1] - moveTo[1]);
         return (x == 2 && y == 1) || (x == 1 && y == 2);
     }
+
 
     public static boolean validRook(char[][] board, char[] move, char[] moveTo) {
         boolean x = false;
@@ -96,7 +73,7 @@ public class Pieces {
                 return true;
             } else if (moveTo[1] == move[1] - 1 && moveTo[0] == move[0] && board[moveTo[1]][moveTo[0]] == '\0'){
                 return true;
-            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] - 1 && isBPiece(board[moveTo[1]][moveTo[0]])){
+            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] - 1 && ChessUtilsisBPiece(board[moveTo[1]][moveTo[0]])){
                 return true;
             } else {
                 return false;
@@ -109,7 +86,7 @@ public class Pieces {
                 return true;
             } else if (moveTo[1] == move[1] + 1 && moveTo[0] == move[0] && board[moveTo[1]][moveTo[0]] == '\0'){
                 return true;
-            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] + 1 && isWPiece(board[moveTo[1]][moveTo[0]])){
+            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] + 1 && ChessUtils.isWPiece(board[moveTo[1]][moveTo[0]])){
                 return true;
             } else {
                 return false;

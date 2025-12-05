@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class GameMaster {
-    public static boolean validMove(char [][] board, char[] move, char[] moveTo){
+    public static boolean validMove(char[][] board, char[] move, char[] moveTo) {
         char piece = board[move[1]][move[0]];
         char target = board[moveTo[1]][moveTo[0]];
         if (move[0] < 0 || move[0] > 7 || move[1] < 0 || move[1] > 7) {
@@ -10,31 +10,31 @@ public class GameMaster {
         } else if (moveTo[0] < 0 || moveTo[0] > 7 || moveTo[1] < 0 || moveTo[1] > 7) {
             System.out.println("Destination square outside the board.");
             return false;
-        } else if (!Pieces.isPiece(piece)) {
+        } else if (!ChessUtils.isPiece(piece)) {
             System.out.println("There are no pieces on the home board.");
             return false;
-        } else if (whiteTurn && !Pieces.isWPiece(piece)) {
+        } else if (whiteTurn && !ChessUtils.isWPiece(piece)) {
             System.out.println("You must move a white piece.");
             return false;
-        } else if(!whiteTurn && !Pieces.isBPiece(piece)) {
+        } else if (!whiteTurn && !ChessUtils.isBPiece(piece)) {
             System.out.println("You must move a black piece.");
             return false;
-        } else if (Pieces.isWPiece(piece) && Pieces.isWPiece(target)) {
+        } else if (ChessUtils.isWPiece(piece) && ChessUtils.isWPiece(target)) {
             System.out.println("You can't capture your own piece.");
             return false;
-        } else if (Pieces.isBPiece(piece) && Pieces.isBPiece(target)) {
+        } else if (ChessUtils.isBPiece(piece) && ChessUtils.isBPiece(target)) {
             System.out.println("You can't capture your own piece.");
             return false;
-        } else if (move [0] == moveTo[0] && move[1] == moveTo[1]) {
+        } else if (move[0] == moveTo[0] && move[1] == moveTo[1]) {
             System.out.println("You must move to a different square.");
             return false;
-        }else if (piece == '♞' || piece == '♘') {
-            if (!validKnight(move, moveTo)) {
+        } else if (piece == '♞' || piece == '♘') {
+            if (!Pieces.validKnight(move, moveTo)) {
                 System.out.println("invalid move for the knight");
                 return false;
             }
             return true;
-        } else if (piece == '♜' || piece == '♖'){
+        } else if (piece == '♜' || piece == '♖') {
             if (!Pieces.validRook(board, move, moveTo)) {
                 System.out.println("invalid move for the rook");
                 return false;
@@ -57,11 +57,13 @@ public class GameMaster {
                 System.out.println("invalid move for the king");
                 return false;
             }
+            return true;
         } else {
             return true;
         }
     }
-    public static char[][] moveP(char [][] board){
+
+    public static char[][] moveP(char[][] board) {
         Scanner sc = new Scanner(System.in);
         char[] move = null;
         char[] moveTo = null;
@@ -89,12 +91,60 @@ public class GameMaster {
             moveTo = to.toCharArray();
             ChessBoard.convert(moveTo);
 
-            validM = GameMaster.validMove(board, move, moveTo);
+            validM = validMove(board, move, moveTo);
+            if (validM) {
+                validM = isCheck(board, whiteTurn);
+            }
         }
         board[moveTo[1]][moveTo[0]] = board[move[1]][move[0]];
         board[move[1]][move[0]] = '\0';
         return board;
     }
 
+    public static boolean isCheck(char[][] board, boolean whiteTurn) {
+        char king = '\0';
+        if (whiteTurn) {
+            king = '♚';
+        } else {
+            king = '♔';
+        }
+        int kRow = -1, kCol = -1;
 
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+                if (board[r][c] == king) {
+                    kRow = r;
+                    kCol = c;
+                    break;
+                }
+            }
+        }
+        for (int r = 0; r < 8; r++) {
+            for (int c = 0; c < 8; c++) {
+
+                char piece = board[r][c];
+
+                if (piece == '\0') continue;
+
+                if (whiteTurn && ChessUtils.isWPiece(piece)) continue;
+                if (!whiteTurn && ChessUtils.isBPiece(piece)) continue;
+                char[] from = {(char) c, (char) r};
+                char[] to = {(char) kCol, (char) kRow};
+                if (piece == '♞' || piece == '♘') {
+                    if (Pieces.validKnight(from, to)) return false;
+                } else if (piece == '♜' || piece == '♖') {
+                    if (Pieces.validRook(board, from, to)) return false;
+                } else if (piece == '♝' || piece == '♗') {
+                    if (Pieces.validBishop(board, from, to)) return false;
+                } else if (piece == '♛' || piece == '♕') {
+                    if (Pieces.validQueen(board, from, to)) return false;
+                } else if (piece == '♚' || piece == '♔') {
+                    if (Pieces.validKing(from, to)) return false;
+                } else if (piece == '♟' || piece == '♙') {
+                    if (Pieces.validPawn(board, from, to, piece)) return false;
+                }
+            }
+        }
+        return true;
+    }
 }

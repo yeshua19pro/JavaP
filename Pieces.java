@@ -23,19 +23,12 @@ public class Pieces {
         return isWPiece(p) || isBPiece(p);
     }
 
-    public static boolean validKnight(char[] move, char[] moveTo){
-        int col = move[0];
-        int row = move[1];
-        if (moveTo[0] == col - 2 && moveTo[1] == row - 1) return true;
-        else if (moveTo[0] == col - 2 && moveTo[1] == row + 1) return true;
-        else if (moveTo[0] == col - 1 && moveTo[1] == row - 2) return true;
-        else if (moveTo[0] == col + 1 && moveTo[1] == row - 2) return true;
-        else if (moveTo[0] == col - 1 && moveTo[1] == row + 2) return true;
-        else if (moveTo[0] == col + 1 && moveTo[1] == row + 2) return true;
-        else if (moveTo[0] == col + 2 && moveTo[1] == row - 1) return true;
-        else if (moveTo[0] == col + 2 && moveTo[1] == row + 1) return true;
-        return false;
+    public static boolean validKnight(char[] move, char[] moveTo) {
+        int x = Math.abs(move[0] - moveTo[0]);
+        int y = Math.abs(move[1] - moveTo[1]);
+        return (x == 2 && y == 1) || (x == 1 && y == 2);
     }
+
     public static boolean validRook(char[][] board, char[] move, char[] moveTo) {
         boolean x = false;
         if (move[0] == moveTo[0]) x = true;
@@ -46,35 +39,13 @@ public class Pieces {
     }
 
     public static boolean validBishop(char[][] board, char[] move, char[] moveTo) {
-        boolean x = false;
-        if (move[0] - moveTo[0] == move[1] - moveTo[1]) x = true;
-        else if (move[1] > moveTo[1] && move[0] < moveTo[0]) {
-            int col = move[0];
-            int row = move[1];
-            while (col < moveTo[0] && row > moveTo[1]) {
-                col++;
-                row--;
-                if (col == moveTo[0] && row == moveTo[1]) {
-                    x = true;
-                }
-            }
-        }
-        else if (move[1] < moveTo[1] && move[0] > moveTo[0]) {
-            int col = move[0];
-            int row = move[1];
-            while (col > moveTo[0] && row < moveTo[1]) {
-                col--;
-                row++;
+        int col = Math.abs(moveTo[0] - move[0]);
+        int row = Math.abs(moveTo[1] - move[1]);
+        if (col != row) return false;
 
-                if (col == moveTo[0] && row == moveTo[1]) {
-                    x = true;
-                }
-            }
-        }
-        if (!x) return false;
-        x = ChessUtils.clean(board, move, moveTo);
-        return x;
+        return ChessUtils.clean(board, move, moveTo);
     }
+
 
     public static boolean validQueen(char[][] board, char[] move, char[] moveTo) {
         if (validRook(board, move, moveTo)) return true;
@@ -84,18 +55,9 @@ public class Pieces {
         return false;
     }
     public static boolean validKing (char[][] board, char[] move, char[] moveTo) {
-        boolean x = false;
-        int col = move[0];
-        int row = move[1];
-        if (moveTo[0] == col - 1 && moveTo[1] == row - 1) x = true;
-        else if (moveTo[0] == col - 1 && moveTo[1] == row) x = true;
-        else if (moveTo[0] == col - 1 && moveTo[1] == row + 1) x = true;
-        else if (moveTo[0] == col && moveTo[1] == row - 1) x = true;
-        else if (moveTo[0] == col && moveTo[1] == row + 1) x = true;
-        else if (moveTo[0] == col + 1 && moveTo[1] == row - 1) x = true;
-        else if (moveTo[0] == col + 1 && moveTo[1] == row) x = true;
-        else if (moveTo[0] == col + 1 && moveTo[1] == row + 1) x = true;
-        if (!x) return false;
+        int col = Math.abs(moveTo[0] - move[0]);
+        int row = Math.abs(moveTo[1] - move[1]);
+        if (col > 1 || row > 1) return false;
         char enemyKing;
         char thisKing = board[move[1]][move[0]];
         if (thisKing == '♚'){
@@ -116,14 +78,9 @@ public class Pieces {
                 }
             }
         }
-        int dx = moveTo[0] - enemyCol;
-        int dy = moveTo[1] - enemyRow;
-        if ( dx < 1 ){
-            dx = -dx;
-        }
-        if ( dy < 1 ){
-            dy = -dy;
-        }
+        int dxEnemy = Math.abs(moveTo[0] - enemyCol);
+        int dyEnemy = Math.abs(moveTo[1] - enemyRow);
+
         if (dx <= 1 && dy <= 1) {
             System.out.println("The king cannot move next to the enemy king.");
             return false;

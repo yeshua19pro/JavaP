@@ -41,5 +41,29 @@ public class ChessUtils {
         }
         return true;
     }
+    public static boolean isWPiece(char p) {
+        char [] wPieces = {'♟', '♞', '♝', '♜', '♛', '♚'};
+        for (int i = 0; i < wPieces.length; i++) {
+            if (p == wPieces[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isBPiece(char p) {
+        char [] bPieces = {'♙', '♘', '♗', '♖', '♕', '♔'};
+        for (int i = 0; i < bPieces.length; i++) {
+            if (p == bPieces[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isPiece(char p) {
+        return isWPiece(p) || isBPiece(p);
+    }
+
 
 }

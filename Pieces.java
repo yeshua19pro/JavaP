@@ -87,4 +87,36 @@ public class Pieces {
         }
         return true;
     }
+
+    public staticc boolean validPawn(char[][] board, char[] move, char[] moveTo) {
+        if (board[move[1]][move[0]] == '♟'){
+            if (moveTo[1] >= move[1]) {
+                return false;
+            } else if (move [1] == 6 && moveTo[1] == 4 && moveTo[0] == move[0] && board[5][move[0]] == '\0' && board[4][move[0]] == '\0'){
+                return true;
+            } else if (moveTo[1] == move[1] - 1 && moveTo[0] == move[0] && board[moveTo[1]][moveTo[0]] == '\0'){
+                return true;
+            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] - 1 && isBPiece(board[moveTo[1]][moveTo[0]])){
+                return true;
+            } else {
+                return false;
+            }
+        }
+        else if (board[move[1]][move[0]] == '♙'){
+            if (moveTo[1] <= move[1]) {
+                return false;
+            } else if (move [1] == 1 && moveTo[1] == 3 && moveTo[0] == move[0] && board[2][move[0]] == '\0' && board[3][move[0]] == '\0'){
+                return true;
+            } else if (moveTo[1] == move[1] + 1 && moveTo[0] == move[0] && board[moveTo[1]][moveTo[0]] == '\0'){
+                return true;
+            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] + 1 && isWPiece(board[moveTo[1]][moveTo[0]])){
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
 }

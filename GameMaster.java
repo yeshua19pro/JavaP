@@ -79,7 +79,7 @@ public class GameMaster {
             }
 
             move = mo.toCharArray();
-            ChessBoard.convert(move);
+            Board.convert(move);
             System.out.println("Enter the cell number (example e2):");
             String to = sc.nextLine().trim();
 
@@ -89,7 +89,7 @@ public class GameMaster {
             }
 
             moveTo = to.toCharArray();
-            ChessBoard.convert(moveTo);
+            Board.convert(moveTo);
 
             validM = validMove(board, move, moveTo, whiteTurn);
             if (validM) {
@@ -98,7 +98,7 @@ public class GameMaster {
                     System.out.println("Move puts or leaves king in check. Choose another move.");
                     System.out.println("Its Checkmate? 1. Yes 2. No");
                     String checkmate = sc.nextLine();
-                    switch (checkmate){
+                    switch (checkmate) {
                         case "1":
                             System.out.println("Checkmate!");
                             sc.close();
@@ -168,5 +168,34 @@ public class GameMaster {
         copy[moveTo[1]][moveTo[0]] = copy[move[1]][move[0]];
         copy[move[1]][move[0]] = '\0';
         return isCheck(copy, whiteTurn);
+    }
+
+    public static void draw(Scanner sc) {
+        System.out.println("Do you want to offer draws? 1. yes 2. no");
+        String drawOffer = sc.nextLine();
+        switch (drawOffer) {
+            case "1":
+                System.out.println("Did your opponent agree to a draw?? \n1. yes \n2. no");
+                String drawResponse = sc.nextLine();
+                switch (drawResponse) {
+                    case "1":
+                        System.out.println("The game is a draw!");
+                        sc.close();
+                        System.exit(0);
+                        return;
+                    case "2":
+                        System.out.println("Draw offer declined. Continuing game.");
+                        break;
+                    default:
+                        System.out.println("Invalid choice. Continuing game.");
+                        break;
+                }
+                break;
+            case "2":
+                break;
+            default:
+                System.out.println("Invalid choice. Continuing game.");
+                break;
+        }
     }
 }

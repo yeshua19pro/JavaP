@@ -1,4 +1,4 @@
-public class ChessBoard {
+public class Board {
     public static void convert(char[] move) {
         //Converts the chess notation to array indices
         switch (move[0]){
@@ -71,6 +71,19 @@ public class ChessBoard {
                 } else {
                     System.out.print("| " + p);
                 }
+            }
+            System.out.println("|");
+        }
+    }
+    public static void printCKBoard(char[][] board) {
+        for (int fila = 0; fila < 8; fila++) {
+            for (int col = 0; col < 8; col++) {
+                char p = board[fila][col];
+                if (p == '\0') {
+                    if ((fila + col) % 2 == 0) p = '▣';
+                    else p = '▢';
+                }
+                    System.out.print("| " + p);
             }
             System.out.println("|");
         }

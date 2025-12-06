@@ -54,26 +54,25 @@ public class ChessBoard {
                 break;
         }
     }
-    public static void printBoard(char [][] board){
-        //Go through each row and column, replacing the blank spaces with boxes.
+    public static void printBoard(char[][] board) {
         for (int fila = 0; fila < 8; fila++) {
             for (int col = 0; col < 8; col++) {
-                if (board[fila][col] == '\0') {
-                    if ((fila + col) % 2 == 0) board[fila][col] = '▣';
-                    else board[fila][col] = '▢';
+                char p = board[fila][col];
+                if (p == '\0') {
+                    if ((fila + col) % 2 == 0) p = '▣';
+                    else p = '▢';
+                }
+                if (col == 2) {
+                    if (p == '▣' || p == '▢') {
+                        System.out.print("| " + p + " ");
+                    } else {
+                        System.out.print("|" + p);
+                    }
+                } else {
+                    System.out.print("| " + p);
                 }
             }
-        }//Go through each row and column, and if any of them are just a box without a tile and are not in the first row and column, print with a space for better visualization.
-        for (int fila = 0; fila < 8; fila++) {
-            for (int col = 0; col < 8; col++) {
-                if (board[fila][col] == '▣'|| board[fila][col] == '▢'){
-                    if (col > 0 && fila > 0 ){
-                        System.out.print("| " + board[fila][col]);
-                    }
-                }else{
-                    System.out.print("|" + board[fila][col]);
-                }
-            } System.out.println("|");
+            System.out.println("|");
         }
     }
 }

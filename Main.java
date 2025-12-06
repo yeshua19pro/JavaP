@@ -56,7 +56,7 @@ public class Main {
                                     break;
                             }
                         }
-                        ChessBoard.printBoard(board);
+                        Board.printBoard(board);
                         board = GameMaster.moveP(board, whiteTurn);
                         whiteTurn = false;
                     }
@@ -77,7 +77,7 @@ public class Main {
                                     break;
                             }
                         }
-                        ChessBoard.printBoard(board);
+                        Board.printBoard(board);
                         board = GameMaster.moveP(board, whiteTurn);
                         whiteTurn = true;
                     }

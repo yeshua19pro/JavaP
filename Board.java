@@ -1,4 +1,4 @@
-public class ChessBoard {
+public class Board {
     public static void convert(char[] move) {
         //Converts the chess notation to array indices
         switch (move[0]){

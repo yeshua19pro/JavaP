@@ -79,7 +79,7 @@ public class GameMaster {
             }
 
             move = mo.toCharArray();
-            ChessBoard.convert(move);
+            Board.convert(move);
             System.out.println("Enter the cell number (example e2):");
             String to = sc.nextLine().trim();
 
@@ -89,7 +89,7 @@ public class GameMaster {
             }
 
             moveTo = to.toCharArray();
-            ChessBoard.convert(moveTo);
+            Board.convert(moveTo);
 
             validM = validMove(board, move, moveTo, whiteTurn);
             if (validM) {

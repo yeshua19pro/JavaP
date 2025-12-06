@@ -65,5 +65,11 @@ public class ChessUtils {
         return isWPiece(p) || isBPiece(p);
     }
 
-
+    public static char[][] copyBoard(char[][] board) {
+        char[][] copy = new char[8][8];
+        for (int r = 0; r < 8; r++) {
+            System.arraycopy(board[r], 0, copy[r], 0, 8);
+        }
+        return copy;
+    }
 }

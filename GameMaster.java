@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class GameMaster {
-    public static boolean validMove(char[][] board, char[] move, char[] moveTo) {
+    public static boolean validMove(char[][] board, char[] move, char[] moveTo, boolean whiteTurn) {
         char piece = board[move[1]][move[0]];
         char target = board[moveTo[1]][moveTo[0]];
         if (move[0] < 0 || move[0] > 7 || move[1] < 0 || move[1] > 7) {
@@ -63,7 +63,7 @@ public class GameMaster {
         }
     }
 
-    public static char[][] moveP(char[][] board) {
+    public static char[][] moveP(char[][] board, boolean whiteTurn) {
         Scanner sc = new Scanner(System.in);
         char[] move = null;
         char[] moveTo = null;
@@ -73,7 +73,7 @@ public class GameMaster {
             System.out.println("Enter the cell number (example e2):");
             String mo = sc.nextLine().trim();
 
-            if (!validateInput(mo)) {
+            if (!ChessUtils.validateInput(mo)) {
                 System.out.println("Invalid format. Use letters a – h and numbers 1 – 8. Example: e2");
                 continue;
             }
@@ -83,7 +83,7 @@ public class GameMaster {
             System.out.println("Ingresa la casilla a la que la vas a mover");
             String to = sc.nextLine().trim();
 
-            if (!validateInput(to)) {
+            if (!ChessUtils.validateInput(to)) {
                 System.out.println("Formato inválido. Usa letra+a–h y número 1–8. Ejemplo: e4");
                 continue;
             }
@@ -91,9 +91,24 @@ public class GameMaster {
             moveTo = to.toCharArray();
             ChessBoard.convert(moveTo);
 
-            validM = validMove(board, move, moveTo);
+            validM = validMove(board, move, moveTo, whiteTurn);
             if (validM) {
-                validM = isCheck(board, whiteTurn);
+                validM = moveLeavesKingInCheck(board, move, moveTo, whiteTurn);
+                if (!validM) {
+                    System.out.println("Move puts or leaves king in check. Choose another move.");
+                    System.out.println("Its Checkmate? 1. Yes 2. No");
+                    String checkmate = sc.nextLine();
+                    switch (checkmate){
+                        case "1":
+                            System.out.println("Checkmate!");
+                            sc.close();
+                        case "2":
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Continuing game.");
+                            break;
+                    }
+                }
             }
         }
         board[moveTo[1]][moveTo[0]] = board[move[1]][move[0]];
@@ -139,12 +154,19 @@ public class GameMaster {
                 } else if (piece == '♛' || piece == '♕') {
                     if (Pieces.validQueen(board, from, to)) return false;
                 } else if (piece == '♚' || piece == '♔') {
-                    if (Pieces.validKing(from, to)) return false;
+                    if (Pieces.validKing(board, from, to)) return false;
                 } else if (piece == '♟' || piece == '♙') {
-                    if (Pieces.validPawn(board, from, to, piece)) return false;
+                    if (Pieces.validPawn(board, from, to)) return false;
                 }
             }
         }
         return true;
+    }
+
+    public static boolean moveLeavesKingInCheck(char[][] board, char[] move, char[] moveTo, boolean whiteTurn) {
+        char[][] copy = ChessUtils.copyBoard(board);
+        copy[moveTo[1]][moveTo[0]] = copy[move[1]][move[0]];
+        copy[move[1]][move[0]] = '\0';
+        return isCheck(copy, whiteTurn);
     }
 }

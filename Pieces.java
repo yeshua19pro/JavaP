@@ -58,14 +58,14 @@ public class Pieces {
         int dxEnemy = Math.abs(moveTo[0] - enemyCol);
         int dyEnemy = Math.abs(moveTo[1] - enemyRow);
 
-        if (dx <= 1 && dy <= 1) {
+        if (dxEnemy <= 1 && dyEnemy <= 1) {
             System.out.println("The king cannot move next to the enemy king.");
             return false;
         }
         return true;
     }
 
-    public staticc boolean validPawn(char[][] board, char[] move, char[] moveTo) {
+    public static boolean validPawn(char[][] board, char[] move, char[] moveTo) {
         if (board[move[1]][move[0]] == '♟'){
             if (moveTo[1] >= move[1]) {
                 return false;
@@ -73,7 +73,7 @@ public class Pieces {
                 return true;
             } else if (moveTo[1] == move[1] - 1 && moveTo[0] == move[0] && board[moveTo[1]][moveTo[0]] == '\0'){
                 return true;
-            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] - 1 && ChessUtilsisBPiece(board[moveTo[1]][moveTo[0]])){
+            } else if (Math.abs(moveTo[0] - move[0]) == 1 && moveTo[1] == move[1] - 1 && ChessUtils.isBPiece(board[moveTo[1]][moveTo[0]])){
                 return true;
             } else {
                 return false;
@@ -94,6 +94,5 @@ public class Pieces {
         } else {
             return false;
         }
-        return true;
     }
 }

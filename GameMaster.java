@@ -80,11 +80,11 @@ public class GameMaster {
 
             move = mo.toCharArray();
             ChessBoard.convert(move);
-            System.out.println("Ingresa la casilla a la que la vas a mover");
+            System.out.println("Enter the cell number (example e2):");
             String to = sc.nextLine().trim();
 
             if (!ChessUtils.validateInput(to)) {
-                System.out.println("Formato inválido. Usa letra+a–h y número 1–8. Ejemplo: e4");
+                System.out.println("Invalid format. Use letters a – h and numbers 1 – 8. Example: e2");
                 continue;
             }
 

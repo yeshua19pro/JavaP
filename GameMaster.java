@@ -1,6 +1,15 @@
 import java.util.Scanner;
 
 public class GameMaster {
+    /**
+     *  @author Sophia Narvaez
+     * @param  move position of the piece
+     * @param  moveTo position to move the piece
+     *  @return true if the move is valid, false otherwise
+     *   Validate the move based on the piece type and the rules of chess
+     *   Check that there are no errors such as positions outside the board, eating your own piece, or trying to move the piece to the same square it came from.
+     *
+     */
     public static boolean validMove(char[][] board, char[] move, char[] moveTo, boolean whiteTurn) {
         char piece = board[move[1]][move[0]];
         char target = board[moveTo[1]][moveTo[0]];
@@ -62,7 +71,13 @@ public class GameMaster {
             return true;
         }
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the chess board
+     *  @return true if the move is valid, false otherwise
+     *   Handles player input for moving a piece, validates the move, and updates the board state accordingly
+     *
+     */
     public static char[][] moveP(char[][] board, boolean whiteTurn) {
         Scanner sc = new Scanner(System.in);
         char[] move = null;
@@ -115,7 +130,12 @@ public class GameMaster {
         board[move[1]][move[0]] = '\0';
         return board;
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the chess board
+     *  @return true if its safe, false otherwise
+     *  Check if the current player's king is in check
+     */
     public static boolean isCheck(char[][] board, boolean whiteTurn) {
         char king = '\0';
         if (whiteTurn) {
@@ -163,6 +183,15 @@ public class GameMaster {
         return true;
     }
 
+    /**
+     *  @author Sophia Narvaez
+     * @param  move position of the piece
+     * @param  moveTo position to move the piece
+     * @param  board current state of the chess board
+     *  @return true if the move is valid, false otherwise
+     *  Check if moving a piece leaves the player's king in check
+     *
+     */
     public static boolean moveLeavesKingInCheck(char[][] board, char[] move, char[] moveTo, boolean whiteTurn) {
         char[][] copy = ChessUtils.copyBoard(board);
         copy[moveTo[1]][moveTo[0]] = copy[move[1]][move[0]];
@@ -170,6 +199,11 @@ public class GameMaster {
         return isCheck(copy, whiteTurn);
     }
 
+    /**
+     *  @author Sophia Narvaez
+     * @param  sc Scanner for user input
+     *  Handles draw offers between players
+     */
     public static void draw(Scanner sc) {
         System.out.println("Do you want to offer draws? 1. yes 2. no");
         String drawOffer = sc.nextLine();

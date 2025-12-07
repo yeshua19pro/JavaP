@@ -1,9 +1,13 @@
 import java.util.Scanner;
 
 public class ChessUtils {
-    static boolean whiteTurn = true;
 
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  s string input representing a position on the chess board (e.g., "e4")
+     *  @return true if the move is valid, false otherwise
+     *   Validate the input string to ensure it represents a valid chess board position
+     */
     public static boolean validateInput(String s) {
         if (s.length() != 2) return false;
         char col = s.charAt(0);
@@ -14,7 +18,13 @@ public class ChessUtils {
     }
 
 
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  move position of the piece
+     * @param  moveTo position to move the piece
+     *  @return true if the move is valid, false otherwise
+     *  validate that the path that the piece will travel is empty (there are no pieces blocking the way)
+     */
     public static boolean clean(char[][] board, char[] move, char[] moveTo) {
 
         int col1 = move[0];
@@ -41,6 +51,11 @@ public class ChessUtils {
         }
         return true;
     }
+    /**
+     *  @author Sophia Narvaez
+     * @param  p character representing a chess piece
+     *  @return true if the piece is a white piece, false otherwise
+     */
     public static boolean isWPiece(char p) {
         char [] wPieces = {'♟', '♞', '♝', '♜', '♛', '♚'};
         for (int i = 0; i < wPieces.length; i++) {
@@ -50,7 +65,11 @@ public class ChessUtils {
         }
         return false;
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  p character representing a chess piece
+     *  @return true if the piece is a black piece, false otherwise
+     */
     public static boolean isBPiece(char p) {
         char [] bPieces = {'♙', '♘', '♗', '♖', '♕', '♔'};
         for (int i = 0; i < bPieces.length; i++) {
@@ -60,11 +79,21 @@ public class ChessUtils {
         }
         return false;
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  p character representing a chess piece
+     *  @return true if the piece is a valid chess piece, false otherwise
+     *  valid based on the methods if it is a white piece/if it is a black piece
+     */
     public static boolean isPiece(char p) {
         return isWPiece(p) || isBPiece(p);
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the chess board
+     *  @return a copy of the chess board
+     *  Create a deep copy of the chess board
+     */
     public static char[][] copyBoard(char[][] board) {
         char[][] copy = new char[8][8];
         for (int r = 0; r < 8; r++) {

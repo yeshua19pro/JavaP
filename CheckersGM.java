@@ -1,6 +1,15 @@
 import java.util.Scanner;
 public class CheckersGM {
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the checkers board
+     * @param  from position of the piece
+     * @param  to position to move the piece
+     *  @return true if the move is valid, false otherwise
+     *   Validate the move based on the piece type and the rules of checkers
+     *   Check that there are no errors such as positions outside the board, eating your own piece.
+     *
+     */
     public static boolean validMove(char[][] board, char[] from, char[] to, boolean whiteTurn) {
         char p = board[from[1]][from[0]];
         char t = board[to[1]][to[0]];
@@ -55,7 +64,14 @@ public class CheckersGM {
         return false;
     }
 
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the checkers board
+     * @param  from position of the piece
+     * @param  to position to move the piece
+     *   Apply the move to the board, updating the positions of the pieces accordingly
+     *
+     */
     public static void applyMove(char[][] board, char[] from, char[] to) {
         int dx = Math.abs(to[0] - from[0]);
 
@@ -72,7 +88,12 @@ public class CheckersGM {
         board[to[1]][to[0]] = board[from[1]][from[0]];
         board[from[1]][from[0]] = '\0';
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the checkers board
+     *   Crown pieces that reach the opposite end of the board
+     *
+     */
     public static void crown(char[][] board) {
         for (int c = 0; c < 8; c++) {
             if (board[0][c] == '◉') board[0][c] = '●';
@@ -81,7 +102,13 @@ public class CheckersGM {
             if (board[7][c] == 'O') board[7][c] = '◎';
         }
     }
-
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the checkers board
+     * @param  whiteTurn whose turn it is
+     *  @return true if the current player has pieces left, false otherwise
+     *
+     */
     public static boolean hasPieces(char[][] board, boolean whiteTurn) {
         for (int r = 0; r < 8; r++) {
             for (int c = 0; c < 8; c++) {

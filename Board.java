@@ -1,4 +1,9 @@
 public class Board {
+    /**
+     *  @author Sophia Narvaez
+     * @param  move array representing a move in chess notation (e.g., 'e2')
+     *  chess notation translated into position in a matrix
+     */
     public static void convert(char[] move) {
         //Converts the chess notation to array indices
         switch (move[0]){
@@ -54,6 +59,11 @@ public class Board {
                 break;
         }
     }
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the chess board
+     *  Print the chess board to the console
+     */
     public static void printBoard(char[][] board) {
         for (int fila = 0; fila < 8; fila++) {
             for (int col = 0; col < 8; col++) {
@@ -75,6 +85,11 @@ public class Board {
             System.out.println("|");
         }
     }
+    /**
+     *  @author Sophia Narvaez
+     * @param  board current state of the checkers board
+     *  Print the checkers board to the console
+     */
     public static void printCKBoard(char[][] board) {
         for (int fila = 0; fila < 8; fila++) {
             for (int col = 0; col < 8; col++) {

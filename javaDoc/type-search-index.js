@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"<Unnamed>","l":"Board"},{"p":"<Unnamed>","l":"CheckersGM"},{"p":"<Unnamed>","l":"ChessUtils"},{"p":"<Unnamed>","l":"GameMaster"},{"p":"<Unnamed>","l":"Main"},{"p":"<Unnamed>","l":"Pieces"}];updateSearchResults();

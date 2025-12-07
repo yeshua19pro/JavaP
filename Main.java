@@ -1,6 +1,15 @@
 import java.util.Scanner;
 
 public class Main {
+    /**
+     *  @author Sophia Narvaez
+     *  Main class to run Checkers or Chess games
+     * Checkers pieces: 'O' for black pieces, '◉' for white pieces
+     * Chess pieces: '♟', '♞', '♝', '♜', '♛', '♚' for white pieces
+     * '♙', '♘', '♗', '♖', '♕', '♔' for black pieces.
+     *
+     * The code repeats and repeats until a player wins
+     */
     public static void main(String[] args) {
         boolean whiteTurn = true;
         char[][] board = new char[8][8];
